@@ -6,7 +6,8 @@ import javax.swing.JOptionPane;
 class ElementGeneric{
   String description;
   int NumOccurrences;
-  Object ponteiro;
+  ElementGeneric ponteiro;
+  String textWithEtiqueta;
   
   public void incrementNumOccurrences(){
 	  this.NumOccurrences = this.NumOccurrences + 1;
@@ -18,26 +19,30 @@ class ValuesInEtiqueta{
   static String nome2 = "";
   static String prep = "";
   static String adjetivo = "";
+  static String adjetivo2 = "";
   public  void clearValues(){
 	nome1 = "";
 	nome2 = "";
 	prep = "";
 	adjetivo = "";
+	adjetivo2 = "";
   }
-}
+}//fim da classe
  
+
 class Group{
   public ArrayList<ElementGeneric> list1Nome, list2NomeAdj,
-  list3NomePrepNome, list4NomeAdjPreoNome, list5NomePrepNomeAdj, list6NomeAdjAdj;
+  list3NomePrepNome, list5NomeAdjPreoNome, list6NomePrepNomeAdj, list4NomeAdjAdj;
 
   
   public Group(){
     list1Nome = new ArrayList<ElementGeneric>();
     list2NomeAdj = new ArrayList<ElementGeneric>();
     list3NomePrepNome = new ArrayList<ElementGeneric>();
-    list4NomeAdjPreoNome = new ArrayList<ElementGeneric>();
-    list5NomePrepNomeAdj = new ArrayList<ElementGeneric>();
-    list6NomeAdjAdj = new ArrayList<ElementGeneric>();
+    list4NomeAdjAdj = new ArrayList<ElementGeneric>();
+    list5NomeAdjPreoNome = new ArrayList<ElementGeneric>();
+    list6NomePrepNomeAdj = new ArrayList<ElementGeneric>();
+    
   }
   
   public String ImprimeListas(){
@@ -55,7 +60,8 @@ class Group{
         if (i==0){
           dado = dado +"Lista 2 - Nome e Adjetivo \n";        
         }
-        dado = dado + list2NomeAdj.get(i).description + "\t count: " + list2NomeAdj.get(i).NumOccurrences +"\n"; 
+        dado = dado + list2NomeAdj.get(i).description + "\t count: " + list2NomeAdj.get(i).NumOccurrences +"\n";
+        
       }
     //Lista3
     for (i=0; i<list3NomePrepNome.size(); i++){
@@ -65,63 +71,72 @@ class Group{
         dado = dado + list3NomePrepNome.get(i).description + "\t count: " + list3NomePrepNome.get(i).NumOccurrences +"\n"; 
       }
     //Lista4
-    for (i=0; i<list4NomeAdjPreoNome.size(); i++){
+    for (i=0; i<list4NomeAdjAdj.size(); i++){
         if (i==0){
-          dado = dado + "Lista 3 - Nome, Adjetivo, Preposição e Nomr\n";        
+          dado = dado + "Lista 4 - Nome, Adjetivo, e Adjetivo\n";        
         }
-        dado = dado + list4NomeAdjPreoNome.get(i).description + "\t count: " + list4NomeAdjPreoNome.get(i).NumOccurrences +"\n"; 
+        dado = dado + list4NomeAdjAdj.get(i).description + "\t count: " + list4NomeAdjAdj.get(i).NumOccurrences +"\n"; 
       }
     //Lista5
-    for (i=0; i<list5NomePrepNomeAdj.size(); i++){
+    for (i=0; i<list5NomeAdjPreoNome.size(); i++){
         if (i==0){
-          dado = dado + "Lista 5 - Nome, Preposição, Nome e Adjetivo\n";        
+          dado = dado + "Lista 5 - Nome, Adjetivo, Preposição e Nome \n";        
         }
-        dado = dado + list5NomePrepNomeAdj.get(i).description + "\t count: " + list5NomePrepNomeAdj.get(i).NumOccurrences +"\n"; 
+        dado = dado + list5NomeAdjPreoNome.get(i).description + "\t count: " + list5NomeAdjPreoNome.get(i).NumOccurrences +"\n"; 
       }
     //Lista6
-    for (i=0; i<list6NomeAdjAdj.size(); i++){
+    for (i=0; i<list6NomePrepNomeAdj.size(); i++){
         if (i==0){
-          dado = dado + "Lista 5 - Nome, Adjetivo e Adjetivo\n";        
+          dado = dado + "Lista 6 - Nome, Preposição, Nome e Adjetivo\n";        
         }
-        dado = dado + list6NomeAdjAdj.get(i).description + "\t count: " + list6NomeAdjAdj.get(i).NumOccurrences +"\n"; 
+        dado = dado + list6NomePrepNomeAdj.get(i).description + "\t count: " + list6NomePrepNomeAdj.get(i).NumOccurrences +"\n"; 
       }
     return dado;
   }
   
-  
-public void addElementInList( ArrayList<ElementGeneric> lista, String descricao){
-	  int indiceElement = -1;
-	  indiceElement  =locateElementInList(lista, descricao);
-	  if (!descricao.isEmpty()){
-		  if (indiceElement ==-1) {
-				ElementGeneric elementList= new ElementGeneric();
-				elementList.description=descricao;
-				elementList.NumOccurrences = 1;
-				lista.add(elementList);
-				JOptionPane.showMessageDialog(null, "palavra " + descricao +" inserida na lista");
-			}
-			else {
-			  lista.get(indiceElement).incrementNumOccurrences();	
-				
-			}	
-  
+  public void addElementInList( ArrayList<ElementGeneric> lista, String descricao, ElementGeneric referenceObject,
+		  String etiqueta){
+	int indiceElement = -1;
+	indiceElement = Auxiliar.locateElementInList(lista, descricao);
+	if (!descricao.isEmpty()){
+	  if (indiceElement ==-1) {
+	    ElementGeneric elementList= new ElementGeneric();
+		elementList.description=descricao;
+		elementList.NumOccurrences = 1;
+		elementList.ponteiro = referenceObject;
+		elementList.textWithEtiqueta = etiqueta;
+		lista.add(elementList);
+		/*JOptionPane.showMessageDialog(null, "palavra " + descricao +" inserida na lista");*/
 	  }
+	  else {
+	    lista.get(indiceElement).incrementNumOccurrences();	
+	  }	
+    }
+  }
+  
+  
+  public void addElementInList( ArrayList<ElementGeneric> lista, String descricao, String etiqueta){
+	int indiceElement = -1;
+	indiceElement  = Auxiliar.locateElementInList(lista, descricao);
+	if (!descricao.isEmpty()){
+	  if (indiceElement ==-1) {
+		ElementGeneric elementList= new ElementGeneric();
+		elementList.description=descricao;
+		elementList.NumOccurrences = 1;
+		elementList.textWithEtiqueta = etiqueta;
+		lista.add(elementList);
+		/*JOptionPane.showMessageDialog(null, "palavra " + descricao +" inserida na lista");*/
+	  }
+	  else {
+		lista.get(indiceElement).incrementNumOccurrences();	
+	  }	
+    }
 	  
   }
-	  
-  public static int locateElementInList(ArrayList<ElementGeneric> lista, String descricao){
-    int returnvalue = -1;
-	  for (int i = 0; i < lista.size(); i++) {
-		  if (lista.get(i).description.equalsIgnoreCase(descricao)){
-			  returnvalue = i;
-			  break;			  
-		  }
-	  }
-	  return returnvalue;
-	  
-  }
+  
+  
     
-} 
+} //fim da classe
 
 public class Auxiliar {
 	public static int getPosOcurence(String data, String subString, int pos, int numOcurrence, boolean retunPosWithSubStr){
@@ -148,6 +163,17 @@ public class Auxiliar {
 	    else
 	      return posSubString;
 	}
+	
+  public static int locateElementInList(ArrayList<ElementGeneric> lista, String descricao){
+	int returnvalue = -1;
+	for (int i = 0; i < lista.size(); i++) {
+	  if (lista.get(i).description.equalsIgnoreCase(descricao)){
+	    returnvalue = i;
+	    break;			  
+	  }
+    }
+	return returnvalue;
+  }	
 	
   public static int getPreviosOcurence(String data, String subString, int posPesquisa, int numOcurrence){
 	//int posSubString = -1;

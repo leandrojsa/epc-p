@@ -1,9 +1,12 @@
 import javax.swing.*;
+
+import ptstemmer.exceptions.PTStemmerException;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class JanelaSimples extends JFrame {
-	JTextPane texto = new JTextPane();
+	JEditorPane texto = new JEditorPane();
 	JMenuItem procLista = new JMenuItem("Listas de Palavras Chave");
 	JMenuItem procPalavraChave = new JMenuItem("Extração de Palavras-Chave");
 	AlgoritmoEPC EPC;
@@ -14,6 +17,7 @@ public class JanelaSimples extends JFrame {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.add(texto);
+		
 		JMenuBar barra = new JMenuBar();
 		//Menus
 		JMenu menuArquivo = new JMenu("Arquivo");
@@ -26,13 +30,13 @@ public class JanelaSimples extends JFrame {
 		JMenuItem procPalavraChave = new JMenuItem("Extração de Palavras-Chave");
 		JMenuItem listarGrupo1 = new JMenuItem("Grupo1");
 		JMenuItem listarGrupo2 = new JMenuItem("Grupo2");
-		
-		
+				
 		menuArquivo.add(arqImport);
 		menuArquivo.add(arqSair);
 		menuProcessar.add(procLista);
 		menuProcessar.add(procPalavraChave);
 		menuListar.add(listarGrupo1);
+		menuListar.add(listarGrupo2);
 		barra.add(menuArquivo);
 		barra.add(menuProcessar);
 		barra.add(menuListar);
@@ -55,7 +59,12 @@ public class JanelaSimples extends JFrame {
 				else{
 					EPC = null;
 					EPC = new AlgoritmoEPC(texto.getText());
-					EPC.Process();
+					try {
+						EPC.Process();
+					} catch (PTStemmerException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
 				}
 					
@@ -65,24 +74,43 @@ public class JanelaSimples extends JFrame {
 		listarGrupo1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (texto.getText().isEmpty()){
-					JOptionPane.showMessageDialog(null, "Insira um texto etiquetado");
-				}
-				else{
+				if (isValidText()){				
 					if (EPC.EnableListarGroup1()){
 					  EPC.ImprimeListInGroup1();	
-					}
+					}					
+				}					
+			}
+		});
+		
+		listarGrupo2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (isValidText()){
+				  if (EPC.EnableListarGroup1()){
+					EPC.ImprimeListInGroup2();	
+				  }
 					
 				}
 					
 			}
 		});
+		
+		
        
 	}
 	
  
+	public boolean isValidText(){
+	  boolean returnResult = true;	
+	  if (texto.getText().isEmpty()){
+		JOptionPane.showMessageDialog(null, "Insira um texto etiquetado");
+		returnResult = false;
+	  }
+	  return(returnResult);
+	   
+	}
 	
 	public static void main(String[] args) {
-		new JanelaSimples();
+		//new JanelaSimples();
 	}
 }
