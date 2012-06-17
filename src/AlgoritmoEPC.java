@@ -70,69 +70,152 @@ import ptstemmer.exceptions.PTStemmerException;
   }
   
   public boolean extractListInGrupo2() throws PTStemmerException{
-	String palavraProcessada;  
+	String palavraProcessada;
     //Lista1
 	for(int i=0; i< grupo1.list1Nome.size(); i++){
       palavraProcessada = extractRadicaisInPalavra(grupo1.list1Nome.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
-    	grupo2Radicais.addElementInList(grupo2Radicais.list1Nome, palavraProcessada, 
-    	  grupo1.list1Nome.get(i),grupo1.list1Nome.get(i).textWithEtiqueta);  
+    	int indice = grupo2Radicais.addElementInList(grupo2Radicais.list1Nome, palavraProcessada, 
+    	  grupo1.list1Nome.get(i),grupo1.list1Nome.get(i).textWithEtiqueta);
+    	if(indice != -1){ 
+    		grupo2Radicais.list1Nome.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
+    		System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+    	}
+    	
       }
     }
     //Lista2
     for(int i=0; i< grupo1.list2NomeAdj.size(); i++){
       palavraProcessada = extractRadicaisInText(grupo1.list2NomeAdj.get(i).description);
         if (!palavraProcessada.isEmpty()){
-      	  grupo2Radicais.addElementInList(grupo2Radicais.list2NomeAdj, palavraProcessada, 
-      	    grupo1.list2NomeAdj.get(i), grupo1.list2NomeAdj.get(i).textWithEtiqueta);  
+        	int indice =  grupo2Radicais.addElementInList(grupo2Radicais.list2NomeAdj, palavraProcessada, 
+      	    grupo1.list2NomeAdj.get(i), grupo1.list2NomeAdj.get(i).textWithEtiqueta);
+        	if(indice != -1){ 
+        		grupo2Radicais.list2NomeAdj.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
+        		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+        	}
       }
     }
     //Lista3
     for(int i=0; i< grupo1.list3NomePrepNome.size(); i++){
       palavraProcessada = extractRadicaisInText(grupo1.list3NomePrepNome.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
-    	grupo2Radicais.addElementInList(grupo2Radicais.list3NomePrepNome, palavraProcessada,
-    	  grupo1.list3NomePrepNome.get(i),grupo1.list3NomePrepNome.get(i).textWithEtiqueta);  
+    	  int indice = grupo2Radicais.addElementInList(grupo2Radicais.list3NomePrepNome, palavraProcessada,
+    	  grupo1.list3NomePrepNome.get(i),grupo1.list3NomePrepNome.get(i).textWithEtiqueta);
+    	  if(indice != -1){ 
+      		grupo2Radicais.list3NomePrepNome.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
+      		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+      	}
       }
     }
    //Lista4
     for(int i=0; i< grupo1.list4NomeAdjAdj.size(); i++){
       palavraProcessada = extractRadicaisInText(grupo1.list4NomeAdjAdj.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
-    	grupo2Radicais.addElementInList(grupo2Radicais.list4NomeAdjAdj, palavraProcessada,
-    	  grupo1.list4NomeAdjAdj.get(i),grupo1.list4NomeAdjAdj.get(i).textWithEtiqueta);  
+    	  int indice = grupo2Radicais.addElementInList(grupo2Radicais.list4NomeAdjAdj, palavraProcessada,
+    	  grupo1.list4NomeAdjAdj.get(i),grupo1.list4NomeAdjAdj.get(i).textWithEtiqueta);
+    	  if(indice != -1){ 
+      		grupo2Radicais.list4NomeAdjAdj.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
+      		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+      	}
       }
     }
    //Lista5
     for(int i=0; i< grupo1.list5NomeAdjPreoNome.size(); i++){
       palavraProcessada = extractRadicaisInText(grupo1.list5NomeAdjPreoNome.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
-    	grupo2Radicais.addElementInList(grupo2Radicais.list5NomeAdjPreoNome, palavraProcessada,
-    	  grupo1.list5NomeAdjPreoNome.get(i), grupo1.list5NomeAdjPreoNome.get(i).textWithEtiqueta);  
+    	  int indice = grupo2Radicais.addElementInList(grupo2Radicais.list5NomeAdjPreoNome, palavraProcessada,
+    	  grupo1.list5NomeAdjPreoNome.get(i), grupo1.list5NomeAdjPreoNome.get(i).textWithEtiqueta);
+    	  if(indice != -1){ 
+      		grupo2Radicais.list5NomeAdjPreoNome.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
+      		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+      	}
       }
     }
   //Lista6
     for(int i=0; i< grupo1.list6NomePrepNomeAdj.size(); i++){
       palavraProcessada = extractRadicaisInText(grupo1.list6NomePrepNomeAdj.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
-    	grupo2Radicais.addElementInList(grupo2Radicais.list6NomePrepNomeAdj, palavraProcessada,
-    	  grupo1.list6NomePrepNomeAdj.get(i), grupo1.list6NomePrepNomeAdj.get(i).textWithEtiqueta);  
+    	  int indice = grupo2Radicais.addElementInList(grupo2Radicais.list6NomePrepNomeAdj, palavraProcessada,
+    	  grupo1.list6NomePrepNomeAdj.get(i), grupo1.list6NomePrepNomeAdj.get(i).textWithEtiqueta);
+    	  if(indice != -1){ 
+      		grupo2Radicais.list6NomePrepNomeAdj.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
+      		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+      	}
       }
     }
    	return (true);
   }
   
+  
   public int countOcurrenceOfRadicaisInTextOriginal(String radical){
+    textoAux = texto;
+    int ocurrence = 0;
+    int pos = 0;
+    
+    String arrayRadical[] = radical.split(" ");
+    
+    // caso o radical tenha mais de uma palavra
+    if (arrayRadical.length > 1){
+      while(pos < textoAux.length()){
+    	pos = textoAux.indexOf(arrayRadical[0], pos);
+    	if(pos == -1){
+ 	       break;
+ 	     }else {
+ 	    	if(textoAux.charAt(pos - 1) != ' ' &&
+ 	          	 textoAux.charAt(pos -1) != '/' && 
+ 	          	 textoAux.charAt(pos - 1) != '>'){
+ 	    		pos += arrayRadical[0].length();
+ 	    		continue;
+ 	    	}else{
+	 	       pos = textoAux.indexOf(" ", pos) + 1;
+	 	       int current_pos = pos;
+	 	       int i = 1;
+	 	       while(i < arrayRadical.length){
+	 	    	   current_pos = textoAux.indexOf(arrayRadical[i], current_pos);
+	 	    	   if(current_pos == pos){
+	 	    		  current_pos = textoAux.indexOf(" ", current_pos) + 1;
+	 	    		  pos = current_pos;
+	 	    	   }else{
+	 	    		   current_pos = -1;
+	 	    		   break;
+	 	    	   }
+	 	    	   i++;
+	 	       }
+	 	       if(current_pos != -1){
+	 	    	  ocurrence++;
+	 	    	  pos = current_pos;
+	 	       }
+ 	    	}
+ 	     }
+      }
+    }
+    // caso o radical seja uma unica palavra
+    else{    
+      while(pos < textoAux.length()){
+	    pos = textoAux.indexOf(radical, pos);
+        if(pos == -1){
+          break;
+        }else{
+          //para verificar o radical foi encontrado no meio de uma palavra
+          if(textoAux.charAt(pos - 1) == ' ' ||
+        	 textoAux.charAt(pos - 1) == '/' || 
+        	 textoAux.charAt(pos - 1) == '>'){
+        	  ocurrence++;
+          }
+    	  pos += radical.length();
+        }
+      }
+    }
 	
-	  
-	return 1;
+	return ocurrence;
   }
  
   public String extractRadicaisInText(String text) throws PTStemmerException
   {
 	String dado = "";
 	Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.PORTER);
-	st.enableCaching(1000000); //Eu ainda não sei quanto devo colocar no cache
+	st.enableCaching(1000000); //Eu ainda nï¿½o sei quanto devo colocar no cache
 	String lista[] = text.split(" ");
 	for (int i=0; i< lista.length; i++){
 	  if (!dado.isEmpty()){
@@ -147,7 +230,7 @@ import ptstemmer.exceptions.PTStemmerException;
   public String extractRadicaisInPalavra(String dado) throws PTStemmerException
   {
 	Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
-	st.enableCaching(1000000); //Eu ainda não sei quanto devo colocar no cache
+	st.enableCaching(1000000); //Eu ainda nï¿½o sei quanto devo colocar no cache
 	String palavra;	
 	palavra = st.getWordStem(dado);
 	return(palavra);
@@ -155,7 +238,7 @@ import ptstemmer.exceptions.PTStemmerException;
 
   	
   private void extractNome(){
-    //A abreviação de um nome no extrator de palavras é "/CN" 
+    //A abreviaï¿½ï¿½o de um nome no extrator de palavras ï¿½ "/CN" 
 	textoAux = texto;
 	String palavraExtraida = "";
 	int posnome,posPreviousEtiqueta, posCorteInicial, posCorteFinal; 
@@ -169,22 +252,21 @@ import ptstemmer.exceptions.PTStemmerException;
 	    palavraExtraida = Auxiliar.extractEtiquetaByDelimitadores(sentenca, EtiqSeparadorEspaco, 0, 1, 
 	      EtiqSeparadorSentenca, 0, 1);
 	    textoAux = textoAux.substring(textoAux.indexOf(sentenca, 0)+sentenca.length(),textoAux.length());
-	    //JOptionPane.showMessageDialog(null, palavraExtraida + "\n  sentença "+ sentenca + "\n " + textoAux);
+	    //JOptionPane.showMessageDialog(null, palavraExtraida + "\n  sentenï¿½a "+ sentenca + "\n " + textoAux);
 	    if (!palavraExtraida.isEmpty()){
 	 	  grupo1.addElementInList(grupo1.list1Nome, palavraExtraida, sentenca);
 	    }
 	  }  
-	}	
-    while (!palavraExtraida.isEmpty());  
+	} while (!palavraExtraida.isEmpty());  
 	JOptionPane.showMessageDialog(null, "Qtd. nomes: " +grupo1.list1Nome.size());  
   }
   
   private void extractNomeAndAdjetivo(){
-    /*A abreviação de um nome juntamente com um adjetivo no extrator de palavras é respectivamente:
+    /*A abreviaï¿½ï¿½o de um nome juntamente com um adjetivo no extrator de palavras ï¿½ respectivamente:
     "/CN" "/ADJ"
     A estrutura para estas sentencas no extrator aparece da seguinte forma:
     /nome/texto/CN#fs  Nome/text/ADJ	
-    Para demarcar o texto podemos utlizar a barra "/" ou o espaço " " para demarcarmos a sequencia 
+    Para demarcar o texto podemos utlizar a barra "/" ou o espaï¿½o " " para demarcarmos a sequencia 
     a ser localizada  */
     //Exemplo:  respeito/RESPEITO/CN#ms a/PREP atividades/ATIVIDADE/CN#fp
     int posInicialNome1, posNome1, posAdj;
@@ -205,7 +287,7 @@ import ptstemmer.exceptions.PTStemmerException;
 	    sentenca = texto;
 	  }
       else {
-        //Recorta a String que contém o trecho do texto procurado
+        //Recorta a String que contï¿½m o trecho do texto procurado
         sentenca = Auxiliar.RecortString(textoAux, posInicialNome1, posAdj +  EtiqAdjetivo.length());
         if (isValidSequenceWithNomeAdj(sentenca, valuesNomeAdj)){
           //Recorta a String que do texto
@@ -220,6 +302,7 @@ import ptstemmer.exceptions.PTStemmerException;
       }
     }while(!sentenca.isEmpty());
     valuesNomeAdj = null;
+    JOptionPane.showMessageDialog(null, "Qtd. NomeAdjetivos: " +grupo1.list2NomeAdj.size()); 
   }
  
   private void extractNomePrepNome(){
@@ -243,7 +326,7 @@ import ptstemmer.exceptions.PTStemmerException;
 	  }
 	  else
 	  {   
-	    //Recorta a String que contém o trecho do texto procurado	    	
+	    //Recorta a String que contï¿½m o trecho do texto procurado	    	
 	    sentenca = Auxiliar.RecortString(textoAux, Auxiliar.getPreviosOcurence(textoAux, EtiqSeparadorEspaco, posPrep, 2),
      	Auxiliar.getPosOcurence(textoAux, EtiqSeparadorSentenca,posPrep ,2, true)+EtiqNome.length()); 
 	    if (!sentenca.isEmpty()){
@@ -265,7 +348,7 @@ import ptstemmer.exceptions.PTStemmerException;
   } 
   
   private void extractNomeAdjPrepNome(){
-    //Exemplo:  Ambiente telemático de ensino 
+    //Exemplo:  Ambiente telemï¿½tico de ensino 
     int posNome1, posNome2, posAdj, posPrep;
 	String sentenca = "";
 	textoAux = texto;
@@ -321,7 +404,7 @@ import ptstemmer.exceptions.PTStemmerException;
 	
 	valueReturn = (etq1.equalsIgnoreCase(EtiqNome)&& etq2.equalsIgnoreCase(EtiqAdjetivo)&&
 	  etq3.equalsIgnoreCase(EtiqPrep)&& etq4.equalsIgnoreCase(EtiqNome));
-	/*JOptionPane.showMessageDialog(null, "Verificação da etiqueta" + valueReturn +
+	/*JOptionPane.showMessageDialog(null, "Verificaï¿½ï¿½o da etiqueta" + valueReturn +
 	  "et1: " + etq1 +
 	  " et2: " + etq2 + 
 	  " et3: " + etq3 + 
@@ -406,7 +489,7 @@ import ptstemmer.exceptions.PTStemmerException;
 	
 	valueReturn = (etq1.equalsIgnoreCase(EtiqNome)&& etq2.equalsIgnoreCase(EtiqPrep)&&
 	  etq3.equalsIgnoreCase(EtiqNome)&& etq4.equalsIgnoreCase(EtiqAdjetivo));
-	/*JOptionPane.showMessageDialog(null, "Verificação da etiqueta" + valueReturn +
+	/*JOptionPane.showMessageDialog(null, "Verificaï¿½ï¿½o da etiqueta" + valueReturn +
 	  "et1: " + etq1 +
 	  " et2: " + etq2 + 
 	  " et3: " + etq3 + 
@@ -431,7 +514,7 @@ import ptstemmer.exceptions.PTStemmerException;
   }
   
   private void extractNomeAjdAdj(){
-	//Exemplo:  programação/PROGRAMAçãO/CN#fs linear/LINEAR/ADJ#gs inteira/INTEIRO/ADJ#fs 
+	//Exemplo:  programaï¿½ï¿½o/PROGRAMAï¿½ï¿½O/CN#fs linear/LINEAR/ADJ#gs inteira/INTEIRO/ADJ#fs 
 	int posNome, posAdj1, posAdj2;
 	String sentenca = "";
 	textoAux = texto;
@@ -550,7 +633,7 @@ import ptstemmer.exceptions.PTStemmerException;
 	/*JOptionPane.showMessageDialog(null, 
 	  "PosNome:" + posEtq1 +" posAdj: " + posEtq2+
 	  "nome: "+ valuesEtiqueta.nome1 + " adj: " + valuesEtiqueta.adjetivo +
-	  "\n sentença: " +sequence + "\n " + valueReturn);*/
+	  "\n sentenï¿½a: " +sequence + "\n " + valueReturn);*/
 	return valueReturn;
   }
   

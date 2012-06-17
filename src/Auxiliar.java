@@ -66,7 +66,7 @@ class Group{
     //Lista3
     for (i=0; i<list3NomePrepNome.size(); i++){
         if (i==0){
-          dado = dado + "Lista 3 - Nome, Preposição Adjetivo\n";        
+          dado = dado + "Lista 3 - Nome, Preposiï¿½ï¿½o Adjetivo\n";        
         }
         dado = dado + list3NomePrepNome.get(i).description + "\t count: " + list3NomePrepNome.get(i).NumOccurrences +"\n"; 
       }
@@ -80,21 +80,21 @@ class Group{
     //Lista5
     for (i=0; i<list5NomeAdjPreoNome.size(); i++){
         if (i==0){
-          dado = dado + "Lista 5 - Nome, Adjetivo, Preposição e Nome \n";        
+          dado = dado + "Lista 5 - Nome, Adjetivo, Preposiï¿½ï¿½o e Nome \n";        
         }
         dado = dado + list5NomeAdjPreoNome.get(i).description + "\t count: " + list5NomeAdjPreoNome.get(i).NumOccurrences +"\n"; 
       }
     //Lista6
     for (i=0; i<list6NomePrepNomeAdj.size(); i++){
         if (i==0){
-          dado = dado + "Lista 6 - Nome, Preposição, Nome e Adjetivo\n";        
+          dado = dado + "Lista 6 - Nome, Preposiï¿½ï¿½o, Nome e Adjetivo\n";        
         }
         dado = dado + list6NomePrepNomeAdj.get(i).description + "\t count: " + list6NomePrepNomeAdj.get(i).NumOccurrences +"\n"; 
       }
     return dado;
   }
   
-  public void addElementInList( ArrayList<ElementGeneric> lista, String descricao, ElementGeneric referenceObject,
+  public int addElementInList( ArrayList<ElementGeneric> lista, String descricao, ElementGeneric referenceObject,
 		  String etiqueta){
 	int indiceElement = -1;
 	indiceElement = Auxiliar.locateElementInList(lista, descricao);
@@ -106,12 +106,16 @@ class Group{
 		elementList.ponteiro = referenceObject;
 		elementList.textWithEtiqueta = etiqueta;
 		lista.add(elementList);
+		indiceElement = lista.size() - 1;
 		/*JOptionPane.showMessageDialog(null, "palavra " + descricao +" inserida na lista");*/
 	  }
 	  else {
-	    lista.get(indiceElement).incrementNumOccurrences();	
+		//elemento ja existe entao nao precisa calcular o numero de ocorrencias
+		indiceElement = -1;
+	    //lista.get(indiceElement).incrementNumOccurrences();	
 	  }	
     }
+	return(indiceElement);
   }
   
   
@@ -132,8 +136,7 @@ class Group{
 	  }	
     }
 	  
-  }
-  
+  } 
   
     
 } //fim da classe
