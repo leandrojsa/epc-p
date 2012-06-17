@@ -6,12 +6,14 @@ import javax.swing.JOptionPane;
 class ElementGeneric{
   String description;
   int NumOccurrences;
+  float frenqRelativa;
   ElementGeneric ponteiro;
   String textWithEtiqueta;
   
   public void incrementNumOccurrences(){
 	  this.NumOccurrences = this.NumOccurrences + 1;
   }
+ 
 
 }
 class ValuesInEtiqueta{
@@ -239,4 +241,14 @@ public class Auxiliar {
 	  return returnValue;
 	  
   }
+  
+  public static int TotalOcorrenciaLista(ArrayList<ElementGeneric> lista){
+	  int ocorrencias = 0;
+	  for(int i= 0; i < lista.size(); i++){
+		  ocorrencias += lista.get(i).NumOccurrences;
+	  }
+	  return ocorrencias;
+  }
+  
+  
 }

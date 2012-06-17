@@ -8,6 +8,7 @@ import ptstemmer.exceptions.PTStemmerException;
   public class AlgoritmoEPC {
   public String texto, textoAux ;
   public  Group grupo1, grupo2Radicais;
+  public ArrayList<ElementGeneric> lista1;
   final String EtiqAdjetivo = "/ADJ";
   final String EtiqNome = "/CN";
   final String EtiqPrep = "/PREP";
@@ -19,6 +20,7 @@ import ptstemmer.exceptions.PTStemmerException;
  	texto = TextoOriginal;
  	grupo1 = new Group();
 	grupo2Radicais = new Group();
+	lista1 = new ArrayList<ElementGeneric>();
 	
   }
   
@@ -41,6 +43,19 @@ import ptstemmer.exceptions.PTStemmerException;
 	String dado;
 	dado =  grupo2Radicais.ImprimeListas();
 	JOptionPane.showMessageDialog(null, "Radicais das Palavras: " + dado);
+  }
+  
+  public void ImprimeLista1(){
+	  String dado = "";
+	  
+	  for (int i=0; i<lista1.size(); i++){
+	      if (i==0){
+	        dado = "Lista 1\n";        
+	      }
+	      dado = dado + lista1.get(i).description + "\t count: " + lista1.get(i).NumOccurrences + "freq: " + lista1.get(i).frenqRelativa + "\n"; 
+      }
+	  JOptionPane.showMessageDialog(null, "Lista 1: " + dado);
+	  
   }
 	
   public boolean Process() throws PTStemmerException{
@@ -79,7 +94,13 @@ import ptstemmer.exceptions.PTStemmerException;
     	  grupo1.list1Nome.get(i),grupo1.list1Nome.get(i).textWithEtiqueta);
     	if(indice != -1){ 
     		grupo2Radicais.list1Nome.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
-    		System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+    		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+    		if(grupo2Radicais.list1Nome.get(indice).NumOccurrences >= 2){
+    			float freq = (float)grupo2Radicais.list1Nome.get(indice).NumOccurrences / (float)Auxiliar.TotalOcorrenciaLista(grupo1.list1Nome);
+    			System.out.println(freq);
+    			grupo2Radicais.list1Nome.get(indice).frenqRelativa = freq;
+    			lista1.add(grupo2Radicais.list1Nome.get(indice));
+    		}
     	}
     	
       }
@@ -93,6 +114,11 @@ import ptstemmer.exceptions.PTStemmerException;
         	if(indice != -1){ 
         		grupo2Radicais.list2NomeAdj.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
         		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+        		if(grupo2Radicais.list2NomeAdj.get(indice).NumOccurrences >= 2){
+        			float freq = (float)grupo2Radicais.list2NomeAdj.get(indice).NumOccurrences / (float)Auxiliar.TotalOcorrenciaLista(grupo1.list2NomeAdj);
+        			grupo2Radicais.list2NomeAdj.get(indice).frenqRelativa = freq;
+        			lista1.add(grupo2Radicais.list2NomeAdj.get(indice));
+        		}
         	}
       }
     }
@@ -105,6 +131,11 @@ import ptstemmer.exceptions.PTStemmerException;
     	  if(indice != -1){ 
       		grupo2Radicais.list3NomePrepNome.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
       		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+      		if(grupo2Radicais.list3NomePrepNome.get(indice).NumOccurrences >= 2){
+      			float freq = (float)grupo2Radicais.list3NomePrepNome.get(indice).NumOccurrences / (float)Auxiliar.TotalOcorrenciaLista(grupo1.list3NomePrepNome);
+    			grupo2Radicais.list3NomePrepNome.get(indice).frenqRelativa = freq;
+    			lista1.add(grupo2Radicais.list3NomePrepNome.get(indice));
+    		}
       	}
       }
     }
@@ -117,6 +148,11 @@ import ptstemmer.exceptions.PTStemmerException;
     	  if(indice != -1){ 
       		grupo2Radicais.list4NomeAdjAdj.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
       		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+      		if(grupo2Radicais.list4NomeAdjAdj.get(indice).NumOccurrences >= 2){
+      			float freq = (float)grupo2Radicais.list4NomeAdjAdj.get(indice).NumOccurrences / (float)Auxiliar.TotalOcorrenciaLista(grupo1.list4NomeAdjAdj);
+    			grupo2Radicais.list4NomeAdjAdj.get(indice).frenqRelativa = freq;
+    			lista1.add(grupo2Radicais.list4NomeAdjAdj.get(indice));
+    		}
       	}
       }
     }
@@ -129,6 +165,11 @@ import ptstemmer.exceptions.PTStemmerException;
     	  if(indice != -1){ 
       		grupo2Radicais.list5NomeAdjPreoNome.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
       		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+      		if(grupo2Radicais.list5NomeAdjPreoNome.get(indice).NumOccurrences >= 2){
+      			float freq = (float)grupo2Radicais.list5NomeAdjPreoNome.get(indice).NumOccurrences / (float)Auxiliar.TotalOcorrenciaLista(grupo1.list5NomeAdjPreoNome);
+    			grupo2Radicais.list5NomeAdjPreoNome.get(indice).frenqRelativa = freq;
+    			lista1.add(grupo2Radicais.list5NomeAdjPreoNome.get(indice));
+    		}
       	}
       }
     }
@@ -141,6 +182,11 @@ import ptstemmer.exceptions.PTStemmerException;
     	  if(indice != -1){ 
       		grupo2Radicais.list6NomePrepNomeAdj.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
       		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
+      		if(grupo2Radicais.list6NomePrepNomeAdj.get(indice).NumOccurrences >= 2){
+      			float freq = (float)grupo2Radicais.list6NomePrepNomeAdj.get(indice).NumOccurrences / (float)Auxiliar.TotalOcorrenciaLista(grupo1.list6NomePrepNomeAdj);
+    			grupo2Radicais.list6NomePrepNomeAdj.get(indice).frenqRelativa = freq;
+    			lista1.add(grupo2Radicais.list6NomePrepNomeAdj.get(indice));
+    		}
       	}
       }
     }
@@ -207,7 +253,7 @@ import ptstemmer.exceptions.PTStemmerException;
         }
       }
     }
-	
+    
 	return ocurrence;
   }
  
@@ -258,7 +304,7 @@ import ptstemmer.exceptions.PTStemmerException;
 	    }
 	  }  
 	} while (!palavraExtraida.isEmpty());  
-	JOptionPane.showMessageDialog(null, "Qtd. nomes: " +grupo1.list1Nome.size());  
+	//JOptionPane.showMessageDialog(null, "Qtd. nomes: " +grupo1.list1Nome.size());  
   }
   
   private void extractNomeAndAdjetivo(){
@@ -302,7 +348,7 @@ import ptstemmer.exceptions.PTStemmerException;
       }
     }while(!sentenca.isEmpty());
     valuesNomeAdj = null;
-    JOptionPane.showMessageDialog(null, "Qtd. NomeAdjetivos: " +grupo1.list2NomeAdj.size()); 
+    //JOptionPane.showMessageDialog(null, "Qtd. NomeAdjetivos: " +grupo1.list2NomeAdj.size()); 
   }
  
   private void extractNomePrepNome(){
