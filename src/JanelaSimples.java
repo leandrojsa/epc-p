@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 public class JanelaSimples extends JFrame {
 	JEditorPane texto = new JEditorPane();
 	JMenuItem procLista = new JMenuItem("Listas de Palavras Chave");
-	JMenuItem procPalavraChave = new JMenuItem("Extra��o de Palavras-Chave");
+	JMenuItem procPalavraChave = new JMenuItem("Extracao de Palavras-Chave");
 	AlgoritmoEPC EPC;
 	
 	public JanelaSimples() {
@@ -27,10 +27,12 @@ public class JanelaSimples extends JFrame {
 		JMenuItem arqSair = new JMenuItem("Sair");
 		JMenuItem arqImport = new JMenuItem("Importar");
 		JMenuItem procLista = new JMenuItem("Listas de Palavras Chave");
-		JMenuItem procPalavraChave = new JMenuItem("Extra��o de Palavras-Chave");
+		JMenuItem procPalavraChave = new JMenuItem("Extracao de Palavras-Chave");
 		JMenuItem listarGrupo1 = new JMenuItem("Grupo1");
 		JMenuItem listarGrupo2 = new JMenuItem("Grupo2");
 		JMenuItem listarLista1 = new JMenuItem("Lista1");
+		JMenuItem listarLista2 = new JMenuItem("Lista2");
+
 				
 		menuArquivo.add(arqImport);
 		menuArquivo.add(arqSair);
@@ -39,6 +41,7 @@ public class JanelaSimples extends JFrame {
 		menuListar.add(listarGrupo1);
 		menuListar.add(listarGrupo2);
 		menuListar.add(listarLista1);
+		menuListar.add(listarLista2);
 		barra.add(menuArquivo);
 		barra.add(menuProcessar);
 		barra.add(menuListar);
@@ -105,7 +108,14 @@ public class JanelaSimples extends JFrame {
 				}	
 			}
 		});
-		
+		listarLista2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (isValidText()){
+					EPC.ImprimeLista2();	
+				}	
+			}
+		});	
 		
        
 	}

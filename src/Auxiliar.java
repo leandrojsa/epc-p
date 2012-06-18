@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JOptionPane;
 
@@ -8,13 +9,13 @@ class ElementGeneric{
   int NumOccurrences;
   float frenqRelativa;
   ElementGeneric ponteiro;
+  ArrayList<ElementGeneric> listaOrig;
   String textWithEtiqueta;
   
   public void incrementNumOccurrences(){
 	  this.NumOccurrences = this.NumOccurrences + 1;
   }
- 
-
+  
 }
 class ValuesInEtiqueta{
   static String nome1 = "";
@@ -97,7 +98,7 @@ class Group{
   }
   
   public int addElementInList( ArrayList<ElementGeneric> lista, String descricao, ElementGeneric referenceObject,
-		  String etiqueta){
+		  String etiqueta, ArrayList<ElementGeneric> listaOrig){
 	int indiceElement = -1;
 	indiceElement = Auxiliar.locateElementInList(lista, descricao);
 	if (!descricao.isEmpty()){
@@ -106,6 +107,7 @@ class Group{
 		elementList.description=descricao;
 		elementList.NumOccurrences = 1;
 		elementList.ponteiro = referenceObject;
+		elementList.listaOrig = listaOrig;
 		elementList.textWithEtiqueta = etiqueta;
 		lista.add(elementList);
 		indiceElement = lista.size() - 1;
@@ -113,6 +115,7 @@ class Group{
 	  }
 	  else {
 		//elemento ja existe entao nao precisa calcular o numero de ocorrencias
+		lista.get(indiceElement).listaOrig = listaOrig;
 		indiceElement = -1;
 	    //lista.get(indiceElement).incrementNumOccurrences();	
 	  }	
@@ -144,6 +147,17 @@ class Group{
 } //fim da classe
 
 public class Auxiliar {
+	
+	public static ArrayList<ElementGeneric> ordena(ArrayList<ElementGeneric> lista, Comparador comparador) {    
+	    Collections.sort(lista, comparador);
+	    return lista;
+	}
+	
+	public static ArrayList<ElementGeneric> ordena(ArrayList<ElementGeneric> lista, Comparador2 comparador) {    
+	    Collections.sort(lista, comparador);
+	    return lista;
+	}
+	
 	public static int getPosOcurence(String data, String subString, int pos, int numOcurrence, boolean retunPosWithSubStr){
 	    int posSubString = -1;
 	    int countOcurrence = 0;

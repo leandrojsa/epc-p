@@ -9,6 +9,7 @@ import ptstemmer.exceptions.PTStemmerException;
   public String texto, textoAux ;
   public  Group grupo1, grupo2Radicais;
   public ArrayList<ElementGeneric> lista1;
+  public ArrayList<ElementGeneric> lista2;
   final String EtiqAdjetivo = "/ADJ";
   final String EtiqNome = "/CN";
   final String EtiqPrep = "/PREP";
@@ -21,7 +22,7 @@ import ptstemmer.exceptions.PTStemmerException;
  	grupo1 = new Group();
 	grupo2Radicais = new Group();
 	lista1 = new ArrayList<ElementGeneric>();
-	
+	lista2 = new ArrayList<ElementGeneric>();
   }
   
   public boolean EnableListarGroup1(){
@@ -47,14 +48,29 @@ import ptstemmer.exceptions.PTStemmerException;
   
   public void ImprimeLista1(){
 	  String dado = "";
-	  
-	  for (int i=0; i<lista1.size(); i++){
+	  Comparador comparador = new Comparador();
+	  ArrayList<ElementGeneric> ordenado = Auxiliar.ordena(lista1, comparador);	  
+	  for (int i=0; i<ordenado.size(); i++){
 	      if (i==0){
 	        dado = "Lista 1\n";        
 	      }
-	      dado = dado + lista1.get(i).description + "\t count: " + lista1.get(i).NumOccurrences + "freq: " + lista1.get(i).frenqRelativa + "\n"; 
+	      dado = dado + ordenado.get(i).description + "\t count: " + ordenado.get(i).NumOccurrences + "\t freq: " + ordenado.get(i).frenqRelativa + "\n"; 
       }
 	  JOptionPane.showMessageDialog(null, "Lista 1: " + dado);
+	  
+  }
+  
+  public void ImprimeLista2(){
+	  String dado = "";
+	  Comparador2 comparador = new Comparador2();
+	  ArrayList<ElementGeneric> ordenado = Auxiliar.ordena(lista2, comparador);
+	  for (int i=0; i<ordenado.size(); i++){
+	      if (i==0){
+	        dado = "\n";
+	      }
+	      dado = dado + ordenado.get(i).description + "\t (" + ordenado.get(i).NumOccurrences + ")\n"; 
+      }
+	  JOptionPane.showMessageDialog(null, "Lista 2" + dado);
 	  
   }
 	
@@ -91,13 +107,13 @@ import ptstemmer.exceptions.PTStemmerException;
       palavraProcessada = extractRadicaisInPalavra(grupo1.list1Nome.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
     	int indice = grupo2Radicais.addElementInList(grupo2Radicais.list1Nome, palavraProcessada, 
-    	  grupo1.list1Nome.get(i),grupo1.list1Nome.get(i).textWithEtiqueta);
+    	  grupo1.list1Nome.get(i),grupo1.list1Nome.get(i).textWithEtiqueta,grupo1.list1Nome);
     	if(indice != -1){ 
     		grupo2Radicais.list1Nome.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
     		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
     		if(grupo2Radicais.list1Nome.get(indice).NumOccurrences >= 2){
     			float freq = (float)grupo2Radicais.list1Nome.get(indice).NumOccurrences / (float)Auxiliar.TotalOcorrenciaLista(grupo1.list1Nome);
-    			System.out.println(freq);
+    			//System.out.println(freq);
     			grupo2Radicais.list1Nome.get(indice).frenqRelativa = freq;
     			lista1.add(grupo2Radicais.list1Nome.get(indice));
     		}
@@ -110,7 +126,7 @@ import ptstemmer.exceptions.PTStemmerException;
       palavraProcessada = extractRadicaisInText(grupo1.list2NomeAdj.get(i).description);
         if (!palavraProcessada.isEmpty()){
         	int indice =  grupo2Radicais.addElementInList(grupo2Radicais.list2NomeAdj, palavraProcessada, 
-      	    grupo1.list2NomeAdj.get(i), grupo1.list2NomeAdj.get(i).textWithEtiqueta);
+      	    grupo1.list2NomeAdj.get(i), grupo1.list2NomeAdj.get(i).textWithEtiqueta,grupo1.list2NomeAdj);
         	if(indice != -1){ 
         		grupo2Radicais.list2NomeAdj.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
         		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
@@ -127,7 +143,7 @@ import ptstemmer.exceptions.PTStemmerException;
       palavraProcessada = extractRadicaisInText(grupo1.list3NomePrepNome.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
     	  int indice = grupo2Radicais.addElementInList(grupo2Radicais.list3NomePrepNome, palavraProcessada,
-    	  grupo1.list3NomePrepNome.get(i),grupo1.list3NomePrepNome.get(i).textWithEtiqueta);
+    	  grupo1.list3NomePrepNome.get(i),grupo1.list3NomePrepNome.get(i).textWithEtiqueta,grupo1.list3NomePrepNome);
     	  if(indice != -1){ 
       		grupo2Radicais.list3NomePrepNome.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
       		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
@@ -144,7 +160,7 @@ import ptstemmer.exceptions.PTStemmerException;
       palavraProcessada = extractRadicaisInText(grupo1.list4NomeAdjAdj.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
     	  int indice = grupo2Radicais.addElementInList(grupo2Radicais.list4NomeAdjAdj, palavraProcessada,
-    	  grupo1.list4NomeAdjAdj.get(i),grupo1.list4NomeAdjAdj.get(i).textWithEtiqueta);
+    	  grupo1.list4NomeAdjAdj.get(i),grupo1.list4NomeAdjAdj.get(i).textWithEtiqueta,grupo1.list4NomeAdjAdj);
     	  if(indice != -1){ 
       		grupo2Radicais.list4NomeAdjAdj.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
       		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
@@ -161,7 +177,7 @@ import ptstemmer.exceptions.PTStemmerException;
       palavraProcessada = extractRadicaisInText(grupo1.list5NomeAdjPreoNome.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
     	  int indice = grupo2Radicais.addElementInList(grupo2Radicais.list5NomeAdjPreoNome, palavraProcessada,
-    	  grupo1.list5NomeAdjPreoNome.get(i), grupo1.list5NomeAdjPreoNome.get(i).textWithEtiqueta);
+    	  grupo1.list5NomeAdjPreoNome.get(i), grupo1.list5NomeAdjPreoNome.get(i).textWithEtiqueta,grupo1.list5NomeAdjPreoNome);
     	  if(indice != -1){ 
       		grupo2Radicais.list5NomeAdjPreoNome.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
       		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
@@ -178,7 +194,7 @@ import ptstemmer.exceptions.PTStemmerException;
       palavraProcessada = extractRadicaisInText(grupo1.list6NomePrepNomeAdj.get(i).description);      	
       if (!palavraProcessada.isEmpty()){
     	  int indice = grupo2Radicais.addElementInList(grupo2Radicais.list6NomePrepNomeAdj, palavraProcessada,
-    	  grupo1.list6NomePrepNomeAdj.get(i), grupo1.list6NomePrepNomeAdj.get(i).textWithEtiqueta);
+    	  grupo1.list6NomePrepNomeAdj.get(i), grupo1.list6NomePrepNomeAdj.get(i).textWithEtiqueta,grupo1.list6NomePrepNomeAdj);
     	  if(indice != -1){ 
       		grupo2Radicais.list6NomePrepNomeAdj.get(indice).NumOccurrences = countOcurrenceOfRadicaisInTextOriginal(palavraProcessada);
       		//System.out.println(palavraProcessada + ": " + grupo2Radicais.list1Nome.get(indice).NumOccurrences);
@@ -188,6 +204,30 @@ import ptstemmer.exceptions.PTStemmerException;
     			lista1.add(grupo2Radicais.list6NomePrepNomeAdj.get(indice));
     		}
       	}
+      }
+    }
+    // Construindo a lista 2
+    for(int i=0; i< grupo2Radicais.list1Nome.size(); i++){
+      boolean achou = false;
+      int j = 0;
+      while (!achou && j < lista1.size()) {
+    	if (lista1.get(j) == grupo2Radicais.list1Nome.get(i)) {
+     	  achou = true;
+     	  // Passo 6 do algoritmo: substitui o radical pela palavra que mais ocorre
+     	  ElementGeneric radical = lista1.get(j);
+          ArrayList<ElementGeneric> listaOrig = radical.listaOrig;
+     	  ElementGeneric el = listaOrig.get(0);
+     	  int max = 0;
+     	  for (int k=0; k < listaOrig.size(); k++) {
+  			 // System.out.println("Radical: " + radical.description + " Palavra da lista: " + listaOrig.get(k).description);
+     		 if (listaOrig.get(k).description.startsWith(radical.description) && listaOrig.get(k).NumOccurrences > max) {
+     			 el = listaOrig.get(k);
+     			 max = el.NumOccurrences;
+     		 }
+     	 }
+    	  if (lista2.size() < 15) lista2.add(el);
+    	}
+    	j++; 
       }
     }
    	return (true);
